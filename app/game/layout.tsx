@@ -1,20 +1,18 @@
-import React from 'react';
+import Link from "next/link";
+import { ReactNode } from "react";
 
-export default function GameLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function GameLayout({ children }: { children: ReactNode }) {
   return (
-    <main className="flex min-h-screen flex-col bg-gray-900 text-white">
-      {/* Here goes the game page content */}
-
-      {/*Here could be a header for the game section */}
-      <section className="flex-grow p-4 md:p-8">
-        {children}
-      </section>
-
-      {/* <GameFooter /> */}
-    </main>
+    <div className="min-h-screen w-full bg-black text-white flex flex-col items-center justify-center p-4 font-sans">
+      <div className="absolute top-6 left-6 z-50">
+        <Link
+          href="/"
+          className="text-gray-400 hover:text-white transition-colors text-sm border border-gray-700 px-4 py-2 rounded-full hover:border-white"
+        >
+          &larr; Wyjdź do menu
+        </Link>
+      </div>
+      {children}
+    </div>
   );
 }
