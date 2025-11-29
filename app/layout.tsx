@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// Użyj tylko jednej definicji fontów w Root Layoucie
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -14,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Galaxy Brainer", // Użyj swojego tytułu
-  description: "Logika gier dla lepszej pamięci...",
+  title: "Galaxy Brainer",
+  description: "Your inteligence doesn't have limits!",
 };
 
 export default function RootLayout({
@@ -28,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children} {/* Dzieci będą albo (public) layout, albo game layout */}
+        {children} {/*Here goes the page content */}
       </body>
     </html>
   );

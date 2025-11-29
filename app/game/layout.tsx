@@ -7,15 +7,13 @@ export default function GameLayout({
 }>) {
   return (
     <main className="flex min-h-screen flex-col bg-gray-900 text-white">
-      {/* 1. Header specyficzny dla sekcji gier (np. z licznikiem punktów, przyciskiem pauzy) */}
+      {/* Here goes the game page content */}
 
-
-      {/* 2. Główna zawartość strony (dzieci: page.tsx, zagnieżdżony layout) */}
+      {/*Here could be a header for the game section */}
       <section className="flex-grow p-4 md:p-8">
         {children}
       </section>
 
-      {/* 3. Opcjonalny Footer dla sekcji gier */}
       {/* <GameFooter /> */}
     </main>
   );
