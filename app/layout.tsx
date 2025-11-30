@@ -3,6 +3,7 @@ import { Inter, Orbitron } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { StarBackground } from "@/components/ui/StarBackground";
 
 // Inter font for general text
 const inter = Inter({
@@ -38,6 +39,7 @@ export default function RootLayout({
         {/* Space for background stars effect  */}
         <Header />
         {/* Main content area */}
+        <StarBackground />
         <main className="flex-1 w-full flex flex-col items-center overflow-y-auto z-10">
           <div className="flex-1 flex flex-col w-full max-w-7xl px-4">
             {children}
