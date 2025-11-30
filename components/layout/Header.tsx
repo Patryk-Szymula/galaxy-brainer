@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from 'next/image';
 
 export function Header() {
     const NavItems = [
@@ -12,8 +13,22 @@ export function Header() {
             <div className="container mx-auto px-6 h-20 flex justify-between items-center">
 
                 {/* Logo - text, but future logo.svg [cite: 72] */}
-                <Link href="/" className="text-2xl font-bold text-white tracking-wider hover:opacity-80 transition-opacity">
-                    GALAXY BRAINER
+                <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    {/* Logo */}
+                    <div className="relative w-10 h-10">
+                        <Image
+                            src="/icons/logo.svg"
+                            alt="Galaxy Brainer Logo"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
+
+                    {/* Name */}
+                    <span className="text-2xl font-bold text-white tracking-wider font-orbitron">
+                        GALAXY BRAINER
+                    </span>
                 </Link>
 
                 {/* Desktop Navigation */}
