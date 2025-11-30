@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { GAME_REGISTRY, GameSlug } from "@/lib/gameRegistry";
 
 interface Props {
@@ -5,37 +6,49 @@ interface Props {
 }
 
 export default async function GamePage({ params }: Props) {
+  // Extract slug and find corresponding game
   const { slug } = await params;
-  const GameSlug = slug as GameSlug;
-  const gameConfig = GAME_REGISTRY[GameSlug];
+  const gameSlug = slug as GameSlug;
+  const gameConfig = GAME_REGISTRY[gameSlug];
 
   // Handle case where game is not found
   if (!gameConfig) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-        <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-          <h1 className="text-3xl font-bold">Game not found</h1>
-        </main>
-      </div>
-    );
+    return notFound();
   }
 
   const GameComponent = gameConfig.component;
 
   return (
-    <div className="flex flex-col items-center w-full max-w-3xl animate-in fade-in duration-500">
+    <div className="flex flex-col items-center w-full max-w-5xl px-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
       {/* Header with game title and optional description*/}
-      <header className="mb-6 text-center">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-wider text-white uppercase border-b-2 border-white pb-2 px-8">
+      <header className="mb-8 text-center space-y-2">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-600 drop-shadow-sm">
           {gameConfig.title}
         </h1>
-        <p className="text-gray-400 mt-2 text-sm">{gameConfig.description}</p>
+        <p className="text-gray-400 text-sm md:text-base max-w-lg mx-auto">
+          {gameConfig.description}
+        </p>
       </header>
 
-      {/* aspect-square for mobiles, aspect-video for desktops */}
-      <div className="w-full aspect-square md:aspect-video border-4 border-white rounded-xl overflow-hidden relative shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-        <GameComponent />
+      {/* Game Component Container */}
+      <div className="relative w-full">
+
+        {/* Light Glow Effect */}
+        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-3xl blur-xl opacity-50 pointer-events-none" />
+
+        {/* Game Container with sci-fi styling */}
+        <div className="relative w-full min-h-[500px] md:min-h-[600px] bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl shadow-2xl flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] pointer-events-none" />
+          {/* Game Component */}
+          <div className="absolute inset-0 z-10 w-full h-full flex items-center justify-center">
+            <GameComponent />
+          </div>
+        </div>
+        <div className="mt-4 flex justify-between text-xs text-gray-600 font-mono uppercase tracking-widest px-4">
+          <span>Control: Mouse / Touch</span>
+          <span>Training: {gameSlug === 'reflex' ? 'Reflex' : gameSlug === 'sequence' ? 'Memory' : ''}</span>
+        </div>
       </div>
     </div>
   );

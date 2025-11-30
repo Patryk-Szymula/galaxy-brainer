@@ -20,12 +20,12 @@ export default function GameListPage({ children }: { children: React.ReactNode }
           <Link
             key={slug}
             href={`/games/${slug}`} // Chosen game link
-            className="group relative block p-6 border border-gray-800 rounded-xl bg-gray-900/50 hover:bg-gray-800/80 transition-all duration-300 hover:scale-105 hover:border-purple-500/50 shadow-lg hover:shadow-purple-500/20"
+            className="group relative flex flex-col h-full p-6 border border-gray-800 rounded-xl bg-gray-900/50 hover:bg-gray-800/80 transition-all duration-300 hover:scale-105 hover:border-purple-500/50 shadow-lg hover:shadow-purple-500/20"
           >
             {/* Game */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
 
-            <div className="relative z-10 flex flex-col items-center">
+            <div className="relative z-10 flex flex-col items-center h-full w-full">
               <h2 className="text-2xl font-semibold text-white mb-2 group-hover:text-purple-400 transition-colors">
                 {game.title}
               </h2>
