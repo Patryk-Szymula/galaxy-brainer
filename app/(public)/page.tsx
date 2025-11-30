@@ -8,7 +8,7 @@ export default function Home() {
       <div className="z-10 flex flex-col items-center text-center p-4">
         {/* Main Title */}
         <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-6 bg-gradient-to-br from-white via-gray-300 to-gray-600 bg-clip-text text-transparent drop-shadow-lg">
-          GALAXY BRAINER DEV
+          GALAXY BRAINER
         </h1>
         {/* Subtitle */}
         <p className="text-gray-400 text-lg md:text-xl max-w-2xl mb-8">
