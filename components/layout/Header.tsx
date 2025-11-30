@@ -8,28 +8,58 @@ export function Header() {
     ];
 
     return (
-        <header className="absolute top-0 left-0 w-full z-50 bg-transparent">
-            <div className="container mx-auto px-4 py-6 flex justify-between items-center">
+        <header className="fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md transition-all duration-300">
+            <div className="container mx-auto px-6 h-20 flex justify-between items-center">
+
                 {/* Logo - text, but future logo.svg [cite: 72] */}
                 <Link href="/" className="text-2xl font-bold text-white tracking-wider hover:opacity-80 transition-opacity">
                     GALAXY BRAINER
                 </Link>
 
-                {/* Navigation Links */}
-                <nav>
-                    <ul className="flex space-x-6">
+                {/* Desktop Navigation */}
+                <nav className="hidden md:flex items-center space-x-8">
+                    <ul className="flex space-x-8">
                         {NavItems.map((item) => (
                             <li key={item.name}>
                                 <Link
                                     href={item.href}
-                                    className="text-white/80 hover:text-white font-medium text-lg transition-colors duration-200"
+                                    className="text-slate-300 hover:text-white font-medium text-sm tracking-wide transition-colors duration-200"
                                 >
                                     {item.name}
                                 </Link>
                             </li>
                         ))}
                     </ul>
+
+                    {/* Separator */}
+                    <div className="h-6 w-px bg-white/10"></div>
+
+                    {/* Auth Buttons */}
+                    <div className="flex items-center space-x-4">
+                        <Link
+                            href="#"
+                            className="text-slate-300 hover:text-white font-medium text-sm transition-colors"
+                        >
+                            Log in
+                        </Link>
+                        <Link
+                            href="#"
+                            className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold rounded-full transition-all shadow-lg shadow-purple-500/20"
+                        >
+                            Join Now
+                        </Link>
+                    </div>
                 </nav>
+
+                {/* Mobile Menu Button */}
+                <button className="md:hidden text-white p-2">
+                    <span className="sr-only">Open menu</span>
+                    {/* Hamburger Icon */}
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
             </div>
         </header>
     );

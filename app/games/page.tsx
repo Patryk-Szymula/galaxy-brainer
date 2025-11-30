@@ -5,7 +5,7 @@ export default function GameListPage({ children }: { children: React.ReactNode }
   const gameList = Object.entries(GAME_REGISTRY);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto space-y-12">
+    <div className="flex flex-1 flex-col items-center justify-center w-full max-w-5xl mx-auto space-y-12">
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
           Choose Your Game

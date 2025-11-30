@@ -11,3 +11,37 @@ h4 {
   font-family: var(--font-orbitron), sans-serif;
   letter-spacing: 0.05em;
 }
+
+@layer utilities {
+
+  /* For WebKit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    /* Width of the scrollbar */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #020617;
+    /* Dark background color (slate-950) */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #475569;
+    /* Color of the scrollbar thumb (slate-600) */
+    border-radius: 5px;
+    /* Rounded corners */
+    border: 2px solid #020617;
+    /* Margin around the thumb */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6366f1;
+    /* Lighter color on hover (indigo-500) */
+  }
+
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #475569 #020617;
+  }
+}
