@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Orbitron } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 // Inter font for general text
 const inter = Inter({
@@ -28,12 +30,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark h-full">
       <body
         className={`${inter.variable} ${orbitron.variable} antialiased
-        bg-black text-white min-h-screen flex items-center justify-center`}
+        bg-black text-white h-full flex flex-col relative overflow-hidden`}
       >
-        {children}
+        {/* Space for background stars effect  */}
+        <Header />
+        {/* Main content area */}
+        <main className="flex-1 w-full flex flex-col items-center overflow-y-auto z-10">
+          <div className="flex-1 flex flex-col w-full max-w-7xl px-4">
+            {children}
+          </div>
+        </main>
+        <Footer />
       </body>
     </html>
   );
