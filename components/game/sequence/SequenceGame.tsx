@@ -2,15 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { GridSize, GAME_CONFIG, GRID_SIZES } from '@/games/sequence/constants';
-import { getNextStep, wait } from '@/games/sequence/engine';
-import next from "next";
-
-type GameState =
-    'menu' | // Initial menu state
-    'demonstrating' | // Showing the sequence to the player
-    'input' | // Waiting for player input
-    'gameover' | // Player made a mistake
-    'success'; // Player completed the sequence successfully
+import { GameState, getNextStep, wait } from '@/games/sequence/engine';
 
 export default function SequenceGame() {
     const [gameState, setGameState] = useState<GameState>('menu'); // Current state of the game
