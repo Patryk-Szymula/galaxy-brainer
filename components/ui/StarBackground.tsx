@@ -1,18 +1,31 @@
 'use client';
 
 import React, { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 interface Star {
     x: number;
     y: number;
     radius: number;
-    vx: number;
-    vy: number;
+    baseVx: number;
+    baseVy: number;
     alpha: number;
 }
 
 export const StarBackground = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const pathname = usePathname();
+
+    // Check if we are on the home page
+    const isInteractiveRef = useRef(pathname === '/');
+
+    // Store the mouse position and the "smoothed" position (for smooth animation)
+    const mousePosition = useRef({ x: 0, y: 0 });
+    const smoothMousePosition = useRef({ x: 0, y: 0 });
+
+    useEffect(() => {
+        isInteractiveRef.current = pathname === '/';
+    }, [pathname]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -23,10 +36,11 @@ export const StarBackground = () => {
 
         let animationFrameId: number;
         let stars: Star[] = [];
-        const numStars = 150; // Number of stars
+        const numStars = 200; // Number of stars
 
-        let mouseX = -1000;
-        let mouseY = -1000;
+        // Set the starting position of the mouse to the center of the screen
+        mousePosition.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        smoothMousePosition.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
         const handleResize = () => {
             canvas.width = window.innerWidth;
@@ -35,75 +49,106 @@ export const StarBackground = () => {
         };
 
         const handleMouseMove = (e: MouseEvent) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        }
+            if (!isInteractiveRef.current) return;
+            mousePosition.current = { x: e.clientX, y: e.clientY };
+        };
 
         const initStars = () => {
             stars = [];
             for (let i = 0; i < numStars; i++) {
+                const radius = Math.random() * 1.5 + 0.5;
+
+                const speedMultiplier = Math.random() * 0.1 + 0.05;
+
                 stars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    radius: Math.random() * 1.5 + 0.5,
-                    vx: 0,
-                    vy: 0,
+                    radius: radius,
+
+
+                    baseVx: speedMultiplier,
+
+                    baseVy: (Math.random() - 0.5) * 0.05,
+
                     alpha: Math.random() * 0.5 + 0.5,
                 });
             }
         };
 
+        // Funkcja liniowej interpolacji (LERP) do wygładzania ruchu
+        const lerp = (start: number, end: number, factor: number) => {
+            return start + (end - start) * factor;
+        };
+
         const render = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Dark background - gradient black-to-dark-blue
+            // Tło
             const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
             gradient.addColorStop(0, "#000010");
             gradient.addColorStop(1, "#000020");
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+            // Aktualizacja wygładzonej pozycji myszy (płynne podążanie)
+            if (isInteractiveRef.current) {
+                smoothMousePosition.current.x = lerp(smoothMousePosition.current.x, mousePosition.current.x, 0.05);
+                smoothMousePosition.current.y = lerp(smoothMousePosition.current.y, mousePosition.current.y, 0.05);
+            }
+
+            // Obliczamy przesunięcie względem środka ekranu
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Wartości przesunięcia (offset)
+            const offsetX = (smoothMousePosition.current.x - centerX);
+            const offsetY = (smoothMousePosition.current.y - centerY);
+
+            const currentTime = Date.now() / 1000;
+
             stars.forEach(star => {
-                // Move star
-                const dx = mouseX - star.x;
-                const dy = mouseY - star.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+                // 1. Stały dryf (gwiazdy zawsze się ruszają)
+                star.x += star.baseVx;
+                star.y += star.baseVy;
 
-                const maxDistance = 200;
-
-                if (distance < maxDistance) {
-                    const force = (maxDistance - distance) / maxDistance;
-                    const angle = Math.atan2(dy, dx);
-
-                    const pushForce = 0.5;
-                    star.vx -= Math.cos(angle) * force * pushForce;
-                    star.vy -= Math.sin(angle) * force * pushForce;
-                }
-
-                // Friction
-                star.vx *= 0.95;
-                star.vy *= 0.95;
-
-                star.x += star.vx + 0.05;
-                star.y += star.vy + 0.02;
-
-                // Wrap around edges
+                // 2. Obsługa zawijania krawędzi (Wrap around)
                 if (star.x < 0) star.x = canvas.width;
                 if (star.x > canvas.width) star.x = 0;
                 if (star.y < 0) star.y = canvas.height;
                 if (star.y > canvas.height) star.y = 0;
 
-                // Draw star
+                // 3. Obliczanie pozycji rysowania z uwzględnieniem efektu 3D (Parallax)
+                // Im większa gwiazda (radius), tym jest "bliżej", więc przesuwa się mocniej
+                let drawX = star.x;
+                let drawY = star.y;
+
+                if (isInteractiveRef.current) {
+                    // Siła efektu (0.02 to czułość) * "głębia" (radius)
+                    const parallaxFactor = 0.04 * star.radius;
+
+                    // Przesuwamy gwiazdę w stronę kursora (dodajemy offset)
+                    // Jeśli chcesz efekt przeciwny (tło ucieka jak przy obrocie kamery), zmień "+" na "-"
+                    drawX += offsetX * parallaxFactor;
+                    drawY += offsetY * parallaxFactor;
+                }
+
+                const flickerSpeed = 1.5;
+                const flickerIntensity = 0.25;
+
+                const pulsingAlpha = star.alpha + Math.sin(currentTime * flickerSpeed + star.x * 0.01) * flickerIntensity;
+
+                const finalAlpha = Math.max(0, Math.min(1, pulsingAlpha));
+
+                // Drawing
                 ctx.beginPath();
-                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+                ctx.arc(drawX, drawY, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${finalAlpha})`;
                 ctx.fill();
             });
 
             animationFrameId = requestAnimationFrame(render);
         };
 
-        // Setup
         handleResize();
         window.addEventListener("resize", handleResize);
         window.addEventListener("mousemove", handleMouseMove);
@@ -119,7 +164,7 @@ export const StarBackground = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"
+            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
         />
     );
 }

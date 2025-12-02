@@ -26,7 +26,7 @@ export function Header() {
                     </div>
 
                     {/* Name */}
-                    <span className="text-2xl font-bold text-white tracking-wider font-orbitron">
+                    <span className="text-2xl font-bold tracking-wide font-orbitron bg-gradient-to-br from-white via-gray-200 to-gray-500 bg-clip-text text-transparent drop-shadow-lg">
                         GALAXY BRAINER
                     </span>
                 </Link>
