@@ -47,7 +47,7 @@ export default async function GamePage({ params }: Props) {
         </div>
         <div className="mt-4 flex justify-between text-xs text-gray-600 font-mono uppercase tracking-widest px-4">
           <span>Control: Mouse / Touch</span>
-          <span>Training: {gameSlug === 'reflex' ? 'Reflex' : gameSlug === 'sequence' ? 'Memory' : ''}</span>
+          <span>Training: {gameConfig.goal}</span>
         </div>
       </div>
     </div>

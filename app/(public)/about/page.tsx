@@ -1,5 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
+import Image from 'next/image';
+
 
 export const metadata: Metadata = {
     title: "About | Galaxy Brainer",
@@ -8,12 +10,12 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
     return (
-        <div className=" min-h-screen text-white selection:bg-purple-500 selection:text-white">
+        <div className="flex flex-1 text-white selection:bg-purple-500 selection:text-white">
             {/* Container */}
-            <div className="max-w-4xl mx-auto px-6 py-20 space-y-24">
+            <div className="max-w-4xl mx-auto px-6 py-36 space-y-12">
                 {/* Header Section */}
                 <header className="text-center space-y-4">
-                    <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+                    <h1 className="text-4xl md:text-5xl pb-2 font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
                         About Galaxy Brainer
                     </h1>
                     <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto">
@@ -73,13 +75,21 @@ export default function AboutPage() {
                     <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
                         {/* Miejsce na awatar autora */}
                         <div className="w-32 h-32 rounded-full bg-slate-700 border-4 border-slate-600 flex-shrink-0 flex items-center justify-center text-4xl">
-                            👨‍🚀
+                            <div className="relative w-fit p-12">
+                                <Image
+                                    src="/icons/logo.svg"
+                                    alt="Galaxy Brainer Logo"
+                                    fill
+                                    className="object-contain"
+                                    priority
+                                />
+                            </div>
                         </div>
 
                         <div className="space-y-4">
                             <h2 className="text-3xl font-bold text-white">About the Creator</h2>
                             <p className="text-indigo-200 max-w-xl">
-                                Hi! I'm the creator of Galaxy Brainer. This project was born from my passion for programming and the desire to create something that combines fun with self-improvement.
+                                Hi! My name is Patrick and I'm the creator of Galaxy Brainer. This project was born from my passion for programming and the desire to create something that combines fun with self-improvement.
                             </p>
                         </div>
                     </div>
