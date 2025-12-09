@@ -23,7 +23,7 @@ export default async function GamePage({ params }: Props) {
 
       {/* Header with game title and optional description*/}
       <header className="mb-8 text-center space-y-2">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-600 drop-shadow-sm">
+        <h1 className="text-4xl md:text-5xl pb-2 font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-sm">
           {gameConfig.title}
         </h1>
         <p className="text-gray-400 text-sm md:text-base max-w-lg mx-auto">

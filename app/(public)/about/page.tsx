@@ -15,7 +15,7 @@ export default function AboutPage() {
             <div className="max-w-4xl mx-auto px-6 py-36 space-y-12">
                 {/* Header Section */}
                 <header className="text-center space-y-4">
-                    <h1 className="text-4xl md:text-5xl pb-2 font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+                    <h1 className="text-4xl md:text-5xl pb-2 font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
                         About Galaxy Brainer
                     </h1>
                     <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto">
