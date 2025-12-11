@@ -25,6 +25,10 @@ const orbitron = Orbitron({
 export const metadata: Metadata = {
   title: "Galaxy Brainer",
   description: "Your inteligence doesn't have limits!",
+  metadataBase: new URL('https://galaxybrainer.com'),
+  alternates: {
+    canonical: './',
+  },
 };
 
 export default function RootLayout({

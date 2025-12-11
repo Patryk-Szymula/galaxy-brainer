@@ -1,8 +1,41 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from 'next'
 import { GAME_REGISTRY, GameSlug } from "@/lib/gameRegistry";
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const { slug } = await params;
+  const gameSlug = slug as GameSlug;
+  const gameConfig = GAME_REGISTRY[gameSlug];
+
+  if (!gameConfig) {
+    return {
+      title: 'Game Not Found | Galaxy Brainer',
+    };
+  }
+
+  return {
+    title: gameConfig.metadata.title,
+    description: gameConfig.metadata.description,
+    openGraph: {
+      title: gameConfig.metadata.title,
+      description: gameConfig.metadata.description,
+      type: 'website',
+      siteName: 'Galaxy Brainer',
+      locale: 'en_US',
+      // images: [
+      //   {
+      //     url: `/${gameSlug}.png`, // Np. dedykowana grafika dla danej gry
+      //     width: 1200,
+      //     height: 630,
+      //     alt: gameConfig.title,
+      //   },
+      // ]
+    }
+  };
 }
 
 export default async function GamePage({ params }: Props) {
@@ -18,8 +51,40 @@ export default async function GamePage({ params }: Props) {
 
   const GameComponent = gameConfig.component;
 
+
+  // --- JSON-LD - configuration of structural data ---
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoGame',
+    name: gameConfig.title,
+    description: gameConfig.metadata.description,
+    genre: ['Puzzle', 'Educational', 'Brain Training', gameConfig.skills],
+    url: `https://galaxybrainer.com/games/${slug}`,
+    // image: `https://galaxybrainer.com/images/${slug}.jpg`,
+    applicationCategory: 'Game',
+    operatingSystem: 'Any',
+    author: {
+      '@type': 'Organization',
+      name: 'Galaxy Brainer',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+  };
+  // ------------------------------------------------------------
+
+
   return (
     <div className="flex flex-col items-center w-full max-w-5xl px-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+
+      {/* Structural data for Google */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       {/* Header with game title and optional description*/}
       <header className="mb-8 text-center space-y-2">
@@ -27,7 +92,10 @@ export default async function GamePage({ params }: Props) {
           {gameConfig.title}
         </h1>
         <p className="text-gray-400 text-sm md:text-base max-w-lg mx-auto">
-          {gameConfig.description}
+          {gameConfig.longDescription.description}
+        </p>
+        <p className="text-gray-400 text-sm md:text-base max-w-lg mx-auto">
+          Mission Rules: {gameConfig.longDescription.rules}
         </p>
       </header>
 
@@ -47,7 +115,7 @@ export default async function GamePage({ params }: Props) {
         </div>
         <div className="mt-4 flex justify-between text-xs text-gray-600 font-mono uppercase tracking-widest px-4">
           <span>Control: Mouse / Touch</span>
-          <span>Training: {gameConfig.goal}</span>
+          <span>Training: {gameConfig.skills}</span>
         </div>
       </div>
     </div>

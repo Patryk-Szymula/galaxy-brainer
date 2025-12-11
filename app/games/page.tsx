@@ -1,5 +1,26 @@
 import Link from "next/link";
+import type { Metadata } from 'next'
 import { GAME_REGISTRY } from "@/lib/gameRegistry";
+
+export const metadata: Metadata = {
+  title: 'All Brain Games - Logic, Memory & Reflex Puzzles | Galaxy Brainer',
+  description: 'Explore our collection of mind games. From reflex tests to mental math, choose your challenge and track your cognitive progress.',
+  openGraph: {
+    title: 'All Brain Games - Logic, Memory & Reflex Puzzles',
+    description: 'Explore our collection of mind games. Choose your challenge and track your cognitive progress.',
+    url: 'https://galaxybrainer.com/games',
+    siteName: 'Galaxy Brainer',
+    // images: [
+    //   {
+    //     url: 'https://galaxybrainer.com/og-image-games.jpg',
+    //     width: 1200,
+    //     height: 630,
+    //     alt: 'Galaxy Brainer Games Collection',
+    //   },
+    // ],
+    type: 'website',
+  },
+};
 
 export default function GameListPage({ children }: { children: React.ReactNode }) {
   const gameList = Object.entries(GAME_REGISTRY);
@@ -30,7 +51,7 @@ export default function GameListPage({ children }: { children: React.ReactNode }
                 {game.title}
               </h2>
               <p className="text-gray-400 text-sm text-center flex-grow">
-                {game.description}
+                {game.shortDescription}
               </p>
               <span className="mt-4 inline-block px-4 py-2 text-sm font-medium text-purple-300 bg-purple-900/20 rounded-full border border-purple-700/50 group-hover:bg-purple-800/30 transition-colors">
                 Play Now &rarr;

@@ -1,5 +1,26 @@
-import { StarBackground } from "@/components/ui/StarBackground";
+import type { Metadata } from 'next'
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: 'Galaxy Brainer - Free Online Brain Training Games',
+  description: 'Level up your intelligence with Galaxy Brainer. Play free, space-themed logic games designed to train memory, reflex, and focus. Start your brain workout today.',
+  openGraph: {
+    title: 'Galaxy Brainer - Free Online Brain Training Games',
+    description: 'Level up your intelligence with Galaxy Brainer. Play free, space-themed logic games designed to train memory, reflex, and focus.',
+    url: 'https://galaxybrainer.com',
+    siteName: 'Galaxy Brainer',
+    locale: 'en_US',
+    type: 'website',
+    // images: [
+    //   {
+    //     url: '/og-home.png', // Obrazek promocyjny (np. zrzut ekranu strony głównej), 1200x630px
+    //     width: 1200,
+    //     height: 630,
+    //     alt: 'Galaxy Brainer Home Page',
+    //   },
+    // ],
+  },
+}
 
 export default function Home() {
   return (
@@ -18,7 +39,7 @@ export default function Home() {
         <div className="flex gap-4">
           <Link
             href="/games"
-            className="px-8 py-3 bg-white text-black rounded-full font-semibold hover:bg-gray-200 transition-colors"
+            className="px-8 py-3 bg-white/10 border border-white/20 rounded-full hover:bg-white/20 transition-all"
           >
             Start training
           </Link>

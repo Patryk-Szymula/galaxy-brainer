@@ -2,10 +2,24 @@ import React from "react";
 import { Metadata } from "next";
 import Image from 'next/image';
 
-
 export const metadata: Metadata = {
-    title: "About | Galaxy Brainer",
-    description: "Learn more about Galaxy Brainer, the platform that offers a variety of brain-training games to enhance your cognitive skills."
+    title: 'About Galaxy Brainer - Our Mission for Better Focus',
+    description: 'Learn about the mission behind Galaxy Brainer. Created to help users improve focus and cognitive skills through modern, gamified mental exercises.',
+    openGraph: {
+        title: 'About Galaxy Brainer - Our Mission for Better Focus',
+        description: 'Learn about the mission behind Galaxy Brainer. Created to help users improve focus and cognitive skills.',
+        url: 'https://galaxybrainer.com/about',
+        siteName: 'Galaxy Brainer',
+        // images: [
+        //     {
+        //         url: 'https://galaxy-brainer.com/og-image-about.jpg',
+        //         width: 1200,
+        //         height: 630,
+        //         alt: 'About Galaxy Brainer Team',
+        //     },
+        // ],
+        type: 'website',
+    },
 };
 
 export default function AboutPage() {
