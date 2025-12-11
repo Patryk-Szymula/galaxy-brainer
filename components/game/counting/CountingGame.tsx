@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-import { GameState, generateMathSequence, validateResult } from '@/games/counting/engine';
-import { GAME_CONFIG } from '@/games/counting/constants';
+import { GameState, generateMathSequence, validateResult } from '@/engine/counting/engine';
+import { GAME_CONFIG } from '@/engine/counting/constants';
 
 export default function CountingStarGame() {
     const [numberCount, setNumberCount] = useState(GAME_CONFIG.defaultSequenceLength); // Default count of numbers

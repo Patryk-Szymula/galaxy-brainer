@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from "react";
-import { GridSize, GAME_CONFIG, GRID_SIZES } from '@/games/sequence/constants';
-import { GameState, getNextStep, wait } from '@/games/sequence/engine';
+import { GridSize, GAME_CONFIG, GRID_SIZES } from '@/engine/sequence/constants';
+import { GameState, getNextStep, wait } from '@/engine/sequence/engine';
 
 export default function SequenceGame() {
     const [gameState, setGameState] = useState<GameState>('menu'); // Current state of the game

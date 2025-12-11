@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from "react";
-import { GameState, getRandomWaitTime } from '@/games/reflex/engine';
+import { GameState, getRandomWaitTime } from '@/engine/reflex/engine';
 
 export default function ReflexGame() {
     const [gameState, setGameState] = useState<GameState>('idle');

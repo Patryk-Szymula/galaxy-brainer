@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { generateCode, GameState } from '@/games/code/engine';
+import { generateCode, GameState } from '@/engine/code/engine';
 
 export default function CodeGame() {
     const [level, setLevel] = useState(1);
